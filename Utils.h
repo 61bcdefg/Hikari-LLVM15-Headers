@@ -17,8 +17,8 @@ bool toObfuscate(bool flag, llvm::Function *f, std::string attribute);
 bool hasApplePtrauth(llvm::Module *M);
 void FixBasicBlockConstantExpr(llvm::BasicBlock *BB);
 void FixFunctionConstantExpr(llvm::Function *Func);
+void writeAnnotation(llvm::Function *f, std::string annotation);
 #if 0
-void appendToAnnotations(llvm::Module &M,llvm::ConstantStruct *Data);
 std::map<llvm::GlobalValue*,llvm::StringRef> BuildAnnotateMap(llvm::Module& M);
 #endif
 #endif
