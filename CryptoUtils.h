@@ -1,5 +1,5 @@
 //===- CryptoUtils.h - Cryptographically Secure Pseudo-Random
-//Generator------------------===//
+// Generator------------------===//
 
 /*
   Copyright (C) 2017 Zhang(https://github.com/Naville/)
@@ -14,17 +14,18 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef LLVM_CryptoUtils_H
-#define LLVM_CryptoUtils_H
+#ifndef _CRYPTO_UTILS_H_
+#define _CRYPTO_UTILS_H_
 
 #include "llvm/Support/ManagedStatic.h"
-
 #include <cstdio>
 #include <map>
 #include <random>
 #include <stdint.h>
 #include <string>
+
 namespace llvm {
+
 class CryptoUtils {
 public:
   CryptoUtils();
@@ -42,6 +43,7 @@ public:
   uint64_t get_uint64_t() { return get<uint64_t>(); };
   uint32_t get_uint8_t() { return get<uint8_t>(); };
   uint32_t get_uint16_t() { return get<uint16_t>(); };
+
   // Scramble32 originally uses AES to generates the mapping relationship
   // between a BB and its switchvar Hikari updates this by doing this using
   // mt19937_64 in C++ STLs which is a faster but less cryprographically secured
@@ -55,6 +57,7 @@ private:
   std::uint_fast64_t get_raw();
 };
 extern ManagedStatic<CryptoUtils> cryptoutils;
+
 } // namespace llvm
 
-#endif // LLVM_CryptoUtils_H
+#endif
