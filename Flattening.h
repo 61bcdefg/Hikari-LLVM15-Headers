@@ -15,6 +15,7 @@
 #define _FLATTENING_H_
 
 #include "llvm/IR/PassManager.h"
+#include "llvm/Pass.h"
 
 namespace llvm {
 FunctionPass *createFlatteningPass(bool flag);

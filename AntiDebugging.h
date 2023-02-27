@@ -2,6 +2,7 @@
 #define _ANTI_DEBUGGING_H_
 
 #include "llvm/IR/PassManager.h"
+#include "llvm/Pass.h"
 
 namespace llvm {
 

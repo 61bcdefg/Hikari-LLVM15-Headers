@@ -1,4 +1,4 @@
-//===- SubstitutionIncludes.h - Substitution Obfuscation
+//===- Substitution.h - Substitution Obfuscation
 // pass-------------------------===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -16,6 +16,7 @@
 #define _SUBSTITUTIONS_H_
 
 #include "llvm/IR/PassManager.h"
+#include "llvm/Pass.h"
 
 namespace llvm {
 
