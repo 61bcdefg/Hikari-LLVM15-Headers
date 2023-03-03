@@ -12,6 +12,7 @@ bool toObfuscate(bool flag, Function *f, std::string attribute);
 bool hasApplePtrauth(Module *M);
 void FixBasicBlockConstantExpr(BasicBlock *BB);
 void FixFunctionConstantExpr(Function *Func);
+void turnOffOptimization(Function *f);
 void writeAnnotation(Function *f, std::string annotation);
 #if 0
 std::map<GlobalValue*, StringRef> BuildAnnotateMap(Module& M);
