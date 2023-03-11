@@ -297,8 +297,13 @@ BasicBlock *LegacyLowerSwitch::switchConvert(
       switchConvert(RHS.begin(), RHS.end(), NewLowerBound, UpperBound, Val,
                     NewNode, OrigBlock, Default, UnreachableRanges);
 
+#if LLVM_VERSION_MAJOR >= 16
+  F->insert(++OrigBlock->getIterator(), NewNode);
+  Comp->insertInto(NewNode, NewNode->end());
+#else
   F->getBasicBlockList().insert(++OrigBlock->getIterator(), NewNode);
   NewNode->getInstList().push_back(Comp);
+#endif
 
   BranchInst::Create(LBranch, RBranch, Comp, NewNode);
   return NewNode;
@@ -313,7 +318,11 @@ BasicBlock *LegacyLowerSwitch::newLeafBlock(CaseRange &Leaf, Value *Val,
                                             BasicBlock *Default) {
   Function *F = OrigBlock->getParent();
   BasicBlock *NewLeaf = BasicBlock::Create(Val->getContext(), "LeafBlock");
+#if LLVM_VERSION_MAJOR >= 16
+  F->insert(++OrigBlock->getIterator(), NewLeaf);
+#else
   F->getBasicBlockList().insert(++OrigBlock->getIterator(), NewLeaf);
+#endif
 
   // Emit comparison
   ICmpInst *Comp = nullptr;
@@ -529,7 +538,11 @@ void LegacyLowerSwitch::processSwitchInst(
   // Create a new, empty default block so that the new hierarchy of
   // if-then statements go to this and the PHI nodes are happy.
   BasicBlock *NewDefault = BasicBlock::Create(SI->getContext(), "NewDefault");
+#if LLVM_VERSION_MAJOR >= 16
+  F->insert(Default->getIterator(), NewDefault);
+#else
   F->getBasicBlockList().insert(Default->getIterator(), NewDefault);
+#endif
   BranchInst::Create(Default, NewDefault);
 
   BasicBlock *SwitchBlock =
@@ -545,7 +558,7 @@ void LegacyLowerSwitch::processSwitchInst(
 
   // We are now done with the switch instruction, delete it.
   BasicBlock *OldDefault = SI->getDefaultDest();
-  CurBlock->getInstList().erase(SI);
+  SI->eraseFromParent();
 
   // If the Default block has no more predecessors just add it to DeleteList.
   if (pred_begin(OldDefault) == pred_end(OldDefault))
