@@ -7,12 +7,15 @@
 namespace llvm {
 
 void fixStack(Function *f);
-std::string readAnnotate(Function *f);
 bool toObfuscate(bool flag, Function *f, std::string attribute);
+bool toObfuscateBoolOption(Function *f, std::string option, bool *val);
+bool toObfuscateUint32Option(Function *f, std::string option, uint32_t *val);
 bool hasApplePtrauth(Module *M);
 void FixFunctionConstantExpr(Function *Func);
 void turnOffOptimization(Function *f);
-void writeAnnotate(Function *f, std::string annotation);
+void annotation2Metadata(Module &M);
+bool readAnnotationMetadata(Function *f, std::string annotation);
+void writeAnnotationMetadata(Function *f, std::string annotation);
 #if 0
 std::map<GlobalValue*, StringRef> BuildAnnotateMap(Module& M);
 #endif
