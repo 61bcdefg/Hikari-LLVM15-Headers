@@ -16,6 +16,7 @@ void turnOffOptimization(Function *f);
 void annotation2Metadata(Module &M);
 bool readAnnotationMetadata(Function *f, std::string annotation);
 void writeAnnotationMetadata(Function *f, std::string annotation);
+bool usersAllInOneFunction(GlobalVariable *GV);
 #if 0
 std::map<GlobalValue*, StringRef> BuildAnnotateMap(Module& M);
 #endif
