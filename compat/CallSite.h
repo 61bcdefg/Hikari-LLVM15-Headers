@@ -25,7 +25,11 @@
 #ifndef LLVM_TRANSFORMS_OBFUSCATION_COMPAT_CALLSITE_H
 #define LLVM_TRANSFORMS_OBFUSCATION_COMPAT_CALLSITE_H
 
+#if LLVM_VERSION_MAJOR >= 17
+#include <optional>
+#else
 #include "llvm/ADT/Optional.h"
+#endif
 #include "llvm/ADT/PointerIntPair.h"
 #include "llvm/ADT/iterator_range.h"
 #include "llvm/IR/Attributes.h"
@@ -546,6 +550,15 @@ public:
     CALLSITE_DELEGATE_GETTER(getOperandBundleAt(Index));
   }
 
+#if LLVM_VERSION_MAJOR >= 17
+  std::optional<OperandBundleUse> getOperandBundle(StringRef Name) const {
+    CALLSITE_DELEGATE_GETTER(getOperandBundle(Name));
+  }
+
+  std::optional<OperandBundleUse> getOperandBundle(uint32_t ID) const {
+    CALLSITE_DELEGATE_GETTER(getOperandBundle(ID));
+  }
+#else
   Optional<OperandBundleUse> getOperandBundle(StringRef Name) const {
     CALLSITE_DELEGATE_GETTER(getOperandBundle(Name));
   }
@@ -553,6 +566,7 @@ public:
   Optional<OperandBundleUse> getOperandBundle(uint32_t ID) const {
     CALLSITE_DELEGATE_GETTER(getOperandBundle(ID));
   }
+  #endif
 
   unsigned countOperandBundlesOfType(uint32_t ID) const {
     CALLSITE_DELEGATE_GETTER(countOperandBundlesOfType(ID));
