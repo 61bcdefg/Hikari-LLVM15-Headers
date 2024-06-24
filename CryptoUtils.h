@@ -49,8 +49,9 @@ public:
   // mt19937_64 in C++ STLs which is a faster but less cryprographically secured
   // This method try to find the corresponding value from the VMap first, if not
   // then use RNG to generate,fill and return the value
-  uint32_t scramble32(uint32_t in,
-                      std::map<uint32_t /*IDX*/, uint32_t /*VAL*/> &VMap);
+  uint32_t
+  scramble32(uint32_t in,
+             std::unordered_map<uint32_t /*IDX*/, uint32_t /*VAL*/> &VMap);
 
 private:
   std::mt19937_64 *eng = nullptr;
