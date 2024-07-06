@@ -23,6 +23,7 @@
 #include <random>
 #include <stdint.h>
 #include <string>
+#include <unordered_map>
 
 namespace llvm {
 
